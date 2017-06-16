@@ -34,3 +34,7 @@ hr:after {
     padding: 0 0.25em;
     background: white;
 }
+
+#sizeButton {
+  padding-top: 15px;
+}

@@ -19,7 +19,18 @@ Pizza.prototype.getToppings = function () {
 }
 
 Pizza.prototype.calculatePrice = function () {
-	return 13.99;
+  if (this.size === "small") {
+    this.totalPrice += 10.99;
+  } else if (this.size === "medium") {
+    this.totalPrice += 13.99;
+  } else if (this.size === "large") {
+    this.totalPrice += 15.99;
+  }
+  alert ("this pizza costs " + this.totalPrice)
+}
+
+Pizza.prototype.getTotalPrice = function () {
+  return this.totalPrice;
 }
 
 Pizza.prototype.addTopping = function (topping){
@@ -33,8 +44,13 @@ function Topping (topping,price) {
 
 
 
-function Ticket (pizzas) {
-	this.pizzas = [];
+function Order (htmlString) {
+	this.htmlString = "";
+}
+
+
+Order.prototype.makeMessage = function (message) {
+  this.htmlString = message;
 }
 
 // var myPizza = new Pizza(); // create pizza
@@ -63,13 +79,19 @@ $(document).ready(function() {
   //   event.preventDefault();
   //
   // });
+  var myPizza = new Pizza(); // make this pizza available to all functions
 
   $("#sizeButton").click(function() {
 
-    var thisSize = $("input[name='sizeRadio']:checked").val();
-    myPizza.setSize(thisSize);
 
- 	  alert (myPizza.size);
+    var thisSize = $("input[name='sizeRadio']:checked").val();
+    if (!thisSize) {
+    } else {
+      myPizza.setSize(thisSize);
+      myPizza.calculatePrice();
+      myString = "Standard " + myPizza.getSize() + " pizza. Boring. Your total comes to: $" + myPizza.getTotalPrice();
+      $("#yourOrder").append(myString);
+    }
 
   });
 });
