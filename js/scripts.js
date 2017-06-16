@@ -51,6 +51,8 @@ var bacon = new Topping ("bacon", 2.00);
 
 var avocado = new Topping ("avocado", 2.00);
 
+var myPizza = new Pizza(); // make this pizza available to all functions
+
 // myPizza.setSize("small");
 // myPizza.addTopping(avocado);
 
@@ -63,10 +65,11 @@ $(document).ready(function() {
   // });
 
   $("#sizeButton").click(function() {
-    var myPizza = new Pizza();
-    var thisSize = $("input[name='sizeRadio']:checked").val();
 
- 	  alert (thisSize);
+    var thisSize = $("input[name='sizeRadio']:checked").val();
+    myPizza.setSize(thisSize);
+
+ 	  alert (myPizza.size);
 
   });
 });
