@@ -37,9 +37,17 @@ Pizza.prototype.addTopping = function (topping){
 	this.toppings.push(topping);
 }
 
+Pizza.prototype.resetToppings = function () {
+  this.toppings = [];
+}
+
 function Topping (topping,price) {
 	this.topping = topping;
   this.price = price;
+}
+
+Topping.prototype.getTopping = function () {
+  return this.topping;
 }
 
 
@@ -55,17 +63,26 @@ Order.prototype.makeMessage = function (message) {
 
 // var myPizza = new Pizza(); // create pizza
 
+var allToppings = [];
+
 var cheese = new Topping ("cheese",1.00);
+allToppings.push(cheese);
 
 var pepperoni = new Topping ("pepperoni",1.00);
+allToppings.push(pepperoni);
 
 var artichoke = new Topping ("artichoke",1.00);
+allToppings.push(artichoke);
 
 var anchovies = new Topping ("anchovies", 1.00);
+allToppings.push(anchovies);
 
 var bacon = new Topping ("bacon", 2.00);
+allToppings.push(bacon);
 
 var avocado = new Topping ("avocado", 2.00);
+allToppings.push(avocado);
+
 
 var myPizza = new Pizza(); // make this pizza available to all functions
 
@@ -86,12 +103,32 @@ $(document).ready(function() {
 
     var thisSize = $("input[name='sizeRadio']:checked").val();
     if (!thisSize) {
+      alert ("Gotta pick a size!");
     } else {
       myPizza.setSize(thisSize);
       myPizza.calculatePrice();
       myString = "Standard " + myPizza.getSize() + " pizza. Boring. Your total comes to: $" + myPizza.getTotalPrice();
       $("#yourOrder").append(myString);
     }
+
+  });
+
+  $("#toppingsButton").click(function() {
+
+    myPizza.resetToppings(); // just in case customer changes mind
+    var thisTopping = "";
+    $("input[name='standard']:checked").each(function () {
+      thisTopping = $(this).val();
+      for (var i=0; i<allToppings.length ;i++) {
+        if (allToppings[i].topping === thisTopping) {
+          alert ("match: " + allToppings[i].topping)
+          myPizza.addTopping(allToppings[i]);
+          alert (myPizza.getToppings());
+          break;
+        }
+      }
+    });
+
 
   });
 });
