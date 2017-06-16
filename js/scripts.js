@@ -87,7 +87,8 @@ allToppings.push(avocado);
 var myPizza = new Pizza(); // make this pizza available to all functions
 
 // myPizza.setSize("small");
-// myPizza.addTopping(avocado);
+//myPizza.addTopping(avocado);
+//myPizza.addTopping(bacon);
 
 // user interface logice
 
@@ -96,7 +97,7 @@ $(document).ready(function() {
   //   event.preventDefault();
   //
   // });
-  var myPizza = new Pizza(); // make this pizza available to all functions
+  // var myPizza = new Pizza(); // make this pizza available to all functions
 
   $("#sizeButton").click(function() {
 
@@ -117,13 +118,13 @@ $(document).ready(function() {
 
     myPizza.resetToppings(); // just in case customer changes mind
     var thisTopping = "";
-    $("input[name='standard']:checked").each(function () {
+    $("input.topping:checked").each(function () {
       thisTopping = $(this).val();
       for (var i=0; i<allToppings.length ;i++) {
         if (allToppings[i].topping === thisTopping) {
-          alert ("match: " + allToppings[i].topping)
+          alert(allToppings[i]);
           myPizza.addTopping(allToppings[i]);
-          alert (myPizza.getToppings());
+
           break;
         }
       }
