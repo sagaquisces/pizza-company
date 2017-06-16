@@ -26,7 +26,12 @@ Pizza.prototype.calculatePrice = function () {
   } else if (this.size === "large") {
     this.totalPrice += 15.99;
   }
-  alert ("this pizza costs " + this.totalPrice)
+  var markup = 0;
+  for (i=0; i < this.toppings.length; i++ ) {
+    markup = this.toppings[i].price;
+    this.totalPrice += markup;
+    alert(this.totalPrice);
+  }
 }
 
 Pizza.prototype.getTotalPrice = function () {
@@ -110,6 +115,9 @@ $(document).ready(function() {
       myPizza.calculatePrice();
       myString = "Standard " + myPizza.getSize() + " pizza. Boring. Your total comes to: $" + myPizza.getTotalPrice();
       $("#yourOrder").append(myString);
+      $(this).unbind('click');
+      $(this).addClass('disabled');
+
     }
 
   });
@@ -130,6 +138,35 @@ $(document).ready(function() {
       }
     });
 
+    var thisSize = $("input[name='sizeRadio']:checked").val();
+    alert (thisSize);
+    if (!thisSize) {
+      alert ("Gotta pick a size!");
+    } else {
+      myPizza.setSize(thisSize);
+      myPizza.calculatePrice();
+      var myString = "Custom pizza with ";
+      var tempString = "";
+      // var kbdEl = "<kbd>";
+      // var kbdElRed = "<kbd class='premium'>";
+      var kbd = "";
+
+      for (var j=0; j < myPizza.toppings.length; j++) {
+        myPizza.toppings[j].price > 1 ? kbd = "<kbd class='premium'>" : kbd = "<kbd class='standard'>";
+        tempString = kbd + myPizza.toppings[j].topping + "</kbd> "
+        myString += tempString;
+      }
+
+      myString += "is yours for: <strong>$" + myPizza.getTotalPrice().toFixed(2) + "</strong>.";
+
+      $("#yourOrder").append(myString);
+
+      $(this).unbind('click');
+      $(this).addClass('disabled');
+      $("#sizeButton").unbind('click');
+      $("#sizeButton").addClass('disabled');
+    
+    }
 
   });
 });
